@@ -1,0 +1,9 @@
+role 'South Region Manager'
+	modelPermission: read
+
+	tablePermission AggregatedBenchmarks = [Level] == "Global" || [Label] == "South"
+
+	tablePermission Store = [RegionName] == "South"
+
+	annotation PBI_Id = da94cb8ebe5b4f50951f3449769d8c4c
+

@@ -1,0 +1,22 @@
+model Model
+	culture: en-GB
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-GB
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["Store","Sales"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Store
+ref table Sales
+ref table AggregatedBenchmarks
+
+ref role 'North Region Manager'
+ref role 'East Region Manager'
+ref role 'South Region Manager'
+

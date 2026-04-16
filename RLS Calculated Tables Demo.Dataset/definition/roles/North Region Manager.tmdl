@@ -1,0 +1,10 @@
+/// Demo role scoped to North region. Replace filter with dynamic user mapping for production.
+role 'North Region Manager'
+	modelPermission: read
+
+	tablePermission Store = [RegionName] == "North"
+
+	tablePermission AggregatedBenchmarks = [Level] == "Global" || [Label] == "North"
+
+	annotation PBI_Id = 375a225b90224414a4be929a91c44a1f
+

@@ -1,0 +1,4 @@
+relationship 8a3f2b1c-9d4e-4f6a-b7c8-d9e0f1a2b3c4
+	fromColumn: Sales.StoreID
+	toColumn: Store.StoreID
+

@@ -1,0 +1,69 @@
+table Sales
+	lineageTag: 8eac4217-2d8b-478c-b832-ed54977d9646
+
+	measure 'Total Sales' = SUM(Sales[SalesAmount])
+		formatString: £#,0
+		lineageTag: 1c67b8fa-e8df-407a-ae28-e7411e7c5eb1
+
+	measure 'Regional Average Sales' = CALCULATE(MAX(AggregatedBenchmarks[Average Sales]), AggregatedBenchmarks[Level] = "Region")
+		formatString: £#,0
+		displayFolder: Benchmarks
+		lineageTag: ec7d8736-e150-4ecc-8c97-2c16e1506b69
+
+	measure 'Global Average Sales' = CALCULATE(MAX(AggregatedBenchmarks[Average Sales]), AggregatedBenchmarks[Level] = "Global")
+		formatString: £#,0
+		displayFolder: Benchmarks
+		lineageTag: c61f1bad-4c9f-40cd-b4fe-b8bd7c568e94
+
+	column StoreID
+		dataType: int64
+		lineageTag: 946456e2-8634-4114-8011-a8dc9641c87d
+		sourceColumn: StoreID
+
+	column RegionID
+		dataType: int64
+		lineageTag: 701a32fe-eade-42ad-bf5e-963d8a86c2fc
+		sourceColumn: RegionID
+
+	column SalesAmount
+		dataType: double
+		lineageTag: a2d22a7a-9bc2-4f5e-b0ec-3b20edb22297
+		summarizeBy: sum
+		sourceColumn: SalesAmount
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: c37eb607-d774-4b28-b09f-36da8a2d7751
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Sales = m
+		dataView: full
+		source =
+				let
+				    Source = Table.FromRows(
+				        {
+				            {1, 1, 48000.00, #date(2025, 1, 31)},
+				            {2, 1, 51000.00, #date(2025, 1, 31)},
+				            {3, 1, 51000.00, #date(2025, 1, 31)},
+				            {4, 2, 36000.00, #date(2025, 1, 31)},
+				            {5, 2, 42000.00, #date(2025, 1, 31)},
+				            {6, 2, 42000.00, #date(2025, 1, 31)},
+				            {7, 3, 62000.00, #date(2025, 1, 31)},
+				            {8, 3, 66000.00, #date(2025, 1, 31)},
+				            {9, 3, 52000.00, #date(2025, 1, 31)}
+				        },
+				        type table [StoreID = Int64.Type, RegionID = Int64.Type, SalesAmount = Decimal.Type, Date = date]
+				    )
+				in
+				    Source
+

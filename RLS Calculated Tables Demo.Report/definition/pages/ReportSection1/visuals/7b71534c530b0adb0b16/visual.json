@@ -1,0 +1,71 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.7.0/schema.json",
+  "name": "7b71534c530b0adb0b16",
+  "position": {
+    "x": 135.12605042016807,
+    "y": 163.33333333333334,
+    "z": 2001,
+    "height": 111.66666666666667,
+    "width": 98.319327731092429,
+    "tabOrder": 2001
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AggregatedBenchmarks"
+                        }
+                      },
+                      "Property": "Average Sales"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(AggregatedBenchmarks.Average Sales)",
+              "nativeQueryRef": "Average Sales"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "AggregatedBenchmarks"
+                    }
+                  },
+                  "Property": "Label"
+                }
+              },
+              "queryRef": "AggregatedBenchmarks.Label",
+              "nativeQueryRef": "Label"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

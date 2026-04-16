@@ -1,0 +1,55 @@
+table AggregatedBenchmarks
+	lineageTag: 4627ce26-dc78-46a7-b62b-de9ec7d803e5
+
+	column Level
+		lineageTag: 9ffd187a-a2ac-490f-bd28-570218e3a362
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Level]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Label
+		lineageTag: c9b06524-d214-4f79-b368-a87316f83cce
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Label]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Average Sales'
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 80f266fc-d419-45b8-9cd8-c31f93711136
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Average Sales]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"en-GB"}
+
+	partition AggregatedBenchmarks = calculated
+		source =
+				
+				UNION(
+				    -- Regional averages
+				    SELECTCOLUMNS(
+				        VALUES(Store[RegionName]),
+				        "Level", "Region",
+				        "Label", Store[RegionName],
+				        "Average Sales", CALCULATE(
+				            AVERAGEX(VALUES(Store[StoreID]), [Total Sales]),
+				            ALLEXCEPT(Store, Store[RegionName])
+				        )
+				    ),
+				    -- Global average
+				    ROW(
+				        "Level", "Global",
+				        "Label", "All Regions",
+				        "Average Sales", CALCULATE(
+				            AVERAGEX(VALUES(Store[StoreID]), [Total Sales]),
+				            ALL(Store)
+				        )
+				    )
+				)
+

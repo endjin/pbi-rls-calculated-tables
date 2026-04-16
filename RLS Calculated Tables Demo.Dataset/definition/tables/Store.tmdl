@@ -1,0 +1,44 @@
+table Store
+	lineageTag: 9d12c2ed-2ed5-4036-af2f-67f80972440f
+
+	column StoreID
+		dataType: int64
+		lineageTag: 12500b10-f1ce-4973-99c3-0199fe4e3fac
+		sourceColumn: StoreID
+
+	column StoreName
+		dataType: string
+		lineageTag: 5c6b82aa-69f1-4752-a5e9-bf65a442c625
+		sourceColumn: StoreName
+
+	column RegionID
+		dataType: int64
+		lineageTag: 578e1f48-6d52-45ec-a37c-14a6520835d9
+		sourceColumn: RegionID
+
+	column RegionName
+		dataType: string
+		lineageTag: 0cd98eef-9a10-4269-b2cc-29702b7d941d
+		sourceColumn: RegionName
+
+	partition Store = m
+		dataView: full
+		source =
+				let
+				    Source = Table.FromRows(
+				        {
+				            {1, "Store A", 1, "North"},
+				            {2, "Store B", 1, "North"},
+				            {3, "Store C", 1, "North"},
+				            {4, "Store D", 2, "South"},
+				            {5, "Store E", 2, "South"},
+				            {6, "Store F", 2, "South"},
+				            {7, "Store G", 3, "East"},
+				            {8, "Store H", 3, "East"},
+				            {9, "Store I", 3, "East"}
+				        },
+				        type table [StoreID = Int64.Type, StoreName = text, RegionID = Int64.Type, RegionName = text]
+				    )
+				in
+				    Source
+

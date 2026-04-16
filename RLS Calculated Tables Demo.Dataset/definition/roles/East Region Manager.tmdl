@@ -1,0 +1,9 @@
+role 'East Region Manager'
+	modelPermission: read
+
+	tablePermission AggregatedBenchmarks = [Level] == "Global" || [Label] == "East"
+
+	tablePermission Store = [RegionName] == "East"
+
+	annotation PBI_Id = 3a1124cde2124e4684786629b360d493
+
